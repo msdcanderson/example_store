@@ -34,10 +34,6 @@ def init_database():
     db.session.commit()
  
     yield db  # this is where the testing happens!
- 
-    # db.drop_all()
-
-
-
-
     
+    db.session.close()
+    db.drop_all()

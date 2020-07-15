@@ -31,6 +31,7 @@ def create_app():
     def index():
         return jsonify({"hello": "world"})
 
+
     with app.app_context():
         db.init_app(app)
         ma.init_app(app)
