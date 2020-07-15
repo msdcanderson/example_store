@@ -25,6 +25,7 @@ sphinxcontrib-httpdomain = "*"
 black = "==19.10b0"
 flask-login = "*"
 flask-authorize = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.8"
