@@ -1,6 +1,8 @@
 import json
 
 
+# TODO add requirements to be logged in...
+
 def test_get_stores_is_empty(test_client):
     """
     Test that there are no stores in the DB
