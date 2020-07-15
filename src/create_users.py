@@ -3,9 +3,9 @@ Store code on creating users here - not to be used until the authorization is wo
 
 I had it all in app.py - but it's messy
 """
-    @app.before_first_request
-    def create_tables():
-        db.create_all()
+    # @app.before_first_request
+    # def create_tables():
+    #     db.create_all()
         # businessowner_user = User(name="Business Owner", email="businessowner@example.com", password="1234")
         # db.session.add(businessowner_user)
         # db.session.commit()
