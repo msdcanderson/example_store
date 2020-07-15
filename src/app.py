@@ -21,9 +21,7 @@ def create_app():
     def handle_marshmallow_validation(err):
         return jsonify(err.messages), 400
 
-
-    from authlogin.models.user import User, Group, Role
-    
+ 
     @app.before_first_request
     def create_tables():
         db.create_all()
