@@ -16,10 +16,11 @@ from flask_jwt_extended import (
 from flask_babel import gettext
 from db import db
 
-from authlogin.schemas.user import UserSchema
+from authlogin.schemas.user import UserSchema, UserRegisterSchema
 from authlogin.models.user import User
 
 
+user_register_schema = UserRegisterSchema()
 user_schema = UserSchema()
 user_list_schema = UserSchema(many=True)
 
@@ -28,15 +29,15 @@ class UserRegister(Resource):
     @classmethod
     def post(cls):
         user_json = request.get_json()
-        user = user_schema.load(user_json)
+        user = user_register_schema.load(user_json)
 
-        try:
-            user.save_to_db()
-            return {"message": gettext("SUCCESS_REGISTER_MESSAGE")}, 201
-        except:  # failed to save user to db
-            traceback.print_exc()
-            user.delete_from_db()
-            return {"message": gettext("FAILED_TO_CREATE")}, 500
+        # try:
+        user.save_to_db()
+        return {"message": gettext("SUCCESS_REGISTER_MESSAGE")}, 201
+        # except:  # failed to save user to db
+        #     traceback.print_exc()
+        #     user.delete_from_db()
+        #     return {"message": gettext("FAILED_TO_CREATE")}, 500
 
 
 class UserLogin(Resource):
@@ -46,16 +47,17 @@ class UserLogin(Resource):
         data = user_schema.load(user_json)
 
         user = User.find_by_email(data.email)
+        print(user)
 
         if user and safe_str_cmp(user.password, data.password):
-                access_token = create_access_token(identity=user.id, fresh=True)
-                refresh_token = create_refresh_token(user.id)
+            access_token = create_access_token(identity=user.id, fresh=True)
+            refresh_token = create_refresh_token(user.id)
 
-                login_user(user)
-                return (
-                    {"access_token": access_token, "refresh_token": refresh_token},
-                    200,
-                )
+            login_user(user)
+            return (
+                {"access_token": access_token, "refresh_token": refresh_token},
+                200,
+            )
             
 
         return {"message": gettext("INVALID_CREDENTIALS")}, 401
