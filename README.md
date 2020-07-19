@@ -13,6 +13,12 @@ pipenv shell
 python .\src\app.py
 ```
 
+OR
+
+```bash
+flask run
+```
+
 ## Flask-Authorize example app
 
 Use this as an example to test the RBAC / ACL provided by the extension [flask-authorize](https://github.com/bprinty/Flask-Authorize).

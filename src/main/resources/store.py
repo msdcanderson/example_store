@@ -16,8 +16,8 @@ store_list_schema = StoreSchema(many=True)
 
 class NewStore(Resource):
     @classmethod
-    # @login_required
-    # @authorize.create(StoreModel)    
+    @login_required
+    @authorize.create(StoreModel)    
     def post(cls):
         store_json = request.get_json()
         store = store_schema.load(store_json)
