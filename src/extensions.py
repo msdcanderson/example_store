@@ -12,10 +12,7 @@ login_manager = LoginManager()
 def load_user(userid):
     return User.query.get(userid)
 
+
 authorize = Authorize()
-
 babel = Babel()
-
 jwt = JWTManager()
-
-

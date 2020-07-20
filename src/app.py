@@ -32,27 +32,32 @@ def create_app():
         return jsonify({"hello": "world"})
 
 
-    with app.app_context():
-        db.init_app(app)
-        ma.init_app(app)
+    db.init_app(app)
+    ma.init_app(app)
 
-        login_manager.init_app(app)
-        authorize.init_app(app)
+    login_manager.init_app(app)
+    authorize.init_app(app)
 
-        jwt.init_app(app)
-        babel.init_app(app)
+    jwt.init_app(app)
+    babel.init_app(app)
 
-        from authlogin.resources.user import UserRegister, UserLogin, UserLogout
+    from authlogin.resources.user import UserRegister, UserLogin, UserLogout
 
-        api.add_resource(UserRegister, "/register")
-        api.add_resource(UserLogin, "/login")
-        api.add_resource(UserLogout, "/logout")
+    api.add_resource(UserRegister, "/register")
+    api.add_resource(UserLogin, "/login")
+    api.add_resource(UserLogout, "/logout")
 
-        from main.resources.store import NewStore, Store, StoreList
+    from authlogin.resources.security import NewGroup, GroupResource
 
-        api.add_resource(NewStore, "/store")
-        api.add_resource(Store, "/store/<int:_id>")
-        api.add_resource(StoreList, "/stores")
+    api.add_resource(NewGroup, "/group")
+    api.add_resource(GroupResource, "/group/<int:_id>")
+
+
+    from main.resources.store import NewStore, Store, StoreList
+
+    api.add_resource(NewStore, "/store")
+    api.add_resource(Store, "/store/<int:_id>")
+    api.add_resource(StoreList, "/stores")
 
     return app
 

@@ -12,11 +12,11 @@ UserGroup = db.Table(
 )
 
 
-UserRole = db.Table(
-    'user_role', db.Model.metadata,
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('role_id', db.Integer, db.ForeignKey('roles.id'))
-)
+# UserRole = db.Table(
+#     'user_role', db.Model.metadata,
+#     db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+#     db.Column('role_id', db.Integer, db.ForeignKey('roles.id'))
+# )
 
 
 class User(UserMixin, db.Model):
@@ -28,7 +28,7 @@ class User(UserMixin, db.Model):
 
     # `roles` and `groups` are reserved words that *must* be defined
     # on the `User` model to use group- or role-based authorization.
-    roles = db.relationship('Role', secondary=UserRole)
+    # roles = db.relationship('Role', secondary=UserRole)
     groups = db.relationship('Group', secondary=UserGroup)
 
 
@@ -60,8 +60,26 @@ class Group(db.Model, AllowancesMixin):
     name = db.Column(db.String(255), nullable=False, unique=True)
 
 
-class Role(db.Model, RestrictionsMixin):
-    __tablename__ = 'roles'
+    @classmethod
+    def find_by_id(cls, _id: int) -> "Group":
+        return cls.query.filter_by(id=_id).first()
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False, unique=True)
+    @classmethod
+    def find_all(cls) -> List["Group"]:
+        return cls.query.all()
+
+    def save_to_db(self) -> None:
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_from_db(self) -> None:
+        db.session.delete(self)
+        db.session.commit()
+
+
+# class Role(db.Model, RestrictionsMixin):
+#     __tablename__ = 'roles'
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(255), nullable=False, unique=True)
+

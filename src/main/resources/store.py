@@ -63,15 +63,16 @@ class Store(Resource):
         return store_schema.dump(store), 200
 
     @classmethod
-    #@login_required
+    @login_required
     # @authorize.delete
     def delete(cls, _id: int):
         store = StoreModel.find_by_id(_id)
         if not store:
             return {"message": gettext("STORE_NOT_FOUND")}, 404
 
-        # if not authorize.delete(store):
-        #     raise Unauthorized
+        if not authorize.delete(store):
+            raise Unauthorized
+            # print("car")
 
         store.delete_from_db()
         return {"message": gettext("STORE_DELETED")}, 200

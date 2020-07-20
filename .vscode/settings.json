@@ -2,10 +2,13 @@
     "python.autoComplete.extraPaths": [
         "./src"
     ],
-    "python.pythonPath": "C:\\Users\\msdca\\.virtualenvs\\phoenix-api-uNThigIs\\Scripts\\python.exe",
+    "python.pythonPath": "C:\\Users\\msdca\\.virtualenvs\\example_store-w2jUQKtG\\Scripts\\python.exe",
    
     "python.testing.unittestEnabled": false,
     "python.testing.nosetestsEnabled": false,
     "python.testing.pytestEnabled": true,
-    "restructuredtext.confPath": "${workspaceFolder}\\docs\\source"
+    "restructuredtext.confPath": "${workspaceFolder}\\docs\\source",
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true
 }
