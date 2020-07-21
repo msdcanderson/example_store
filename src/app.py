@@ -47,10 +47,12 @@ def create_app():
     api.add_resource(UserLogin, "/login")
     api.add_resource(UserLogout, "/logout")
 
-    from authlogin.resources.security import NewGroup, GroupResource
+    from authlogin.resources.security import NewGroup, GroupResource, UserGroup
 
     api.add_resource(NewGroup, "/group")
     api.add_resource(GroupResource, "/group/<int:_id>")
+    # api.add_resource(UserGroup, "/usergroup/<int:_id>")
+    api.add_resource(UserGroup, "/usergroup")
 
 
     from main.resources.store import NewStore, Store, StoreList

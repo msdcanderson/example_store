@@ -6,19 +6,17 @@ from flask_babel import gettext
 from werkzeug.exceptions import Unauthorized
 
 from extensions import authorize
-from authlogin.schemas.security import GroupSchema #, UserGroupSchema
-from authlogin.models.user import Group
+from authlogin.schemas.security import GroupSchema
+from authlogin.models.user import Group, User
 
 
 group_schema = GroupSchema()
 gorup_list_schema = GroupSchema(many=True)
-# usergroup_schema = UserGroupSchema()
-# usergroup_list_schema = UserGroupSchema(many=True)
 
 
 class NewGroup(Resource):
     @classmethod
-    @login_required
+    # @login_required
     def post(cls):
         group_json = request.get_json()
         group = group_schema.load(group_json)
@@ -87,13 +85,19 @@ class GroupList(Resource):
             200,
         )
 
+# TODO change this to patch request and pass the group-ids for the user
+class UserGroup(Resource):
+    @classmethod
+    # @login_required()
+    def post(cls):
+        usergroup_json = request.get_json()
+        groups = []
 
-# class NewUserGroup(Resource):
-#     @classmethod
-#     @login_required()
-#     def post(cls):
-#         usergroup_json = request.get_json()
-#         usergroup = usergroup_schema.load(usergroup_json)
+        # for _id in usergroup_json["group"]:
+        #     print(_id)
+        #     groups.append(_id)
 
-#         usergroup.save_to_db()
-#         return {"message": gettext("USERGROUP_CREATED")}, 201
+        # usergroup = User(user=usergroup_json["user"], groups=groups, name="mike", email="mike@example.com", password="1234")
+        user = User(name="mike1", email="mike1@example.com", password="1234", groups=[1])
+        user.save_to_db()
+        return {"message": gettext("USERGROUP_PERMISSION_CREATED")}, 201
