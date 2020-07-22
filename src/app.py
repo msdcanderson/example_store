@@ -51,8 +51,8 @@ def create_app():
 
     api.add_resource(NewGroup, "/group")
     api.add_resource(GroupResource, "/group/<int:_id>")
-    # api.add_resource(UserGroup, "/usergroup/<int:_id>")
-    api.add_resource(UserGroup, "/usergroup")
+    api.add_resource(UserGroup, "/usergroup/<int:_id>")
+    # api.add_resource(UserGroup, "/usergroup")
 
 
     from main.resources.store import NewStore, Store, StoreList

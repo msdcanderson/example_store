@@ -11,7 +11,7 @@ from authlogin.models.user import Group, User
 
 
 group_schema = GroupSchema()
-gorup_list_schema = GroupSchema(many=True)
+group_list_schema = GroupSchema(many=True)
 
 
 class NewGroup(Resource):
@@ -85,19 +85,27 @@ class GroupList(Resource):
             200,
         )
 
-# TODO change this to patch request and pass the group-ids for the user
+
+# TODO add permissions to this
 class UserGroup(Resource):
     @classmethod
-    # @login_required()
-    def post(cls):
+    # @login_required
+    def patch(cls, _id: int):
         usergroup_json = request.get_json()
+        user = User.find_by_id(_id)
         groups = []
 
-        # for _id in usergroup_json["group"]:
-        #     print(_id)
-        #     groups.append(_id)
+        if user:
+            for _id in usergroup_json["groups"]:
+                group = Group.query.filter_by(id=_id).first()
+                if group:
+                    groups.append(group)
+                else:
+                    return {"message": gettext("GROUP_NOT_FOUND")}
+        else:
+            return {"message": gettext("USER_NOT_FOUND")}, 404
 
-        # usergroup = User(user=usergroup_json["user"], groups=groups, name="mike", email="mike@example.com", password="1234")
-        user = User(name="mike1", email="mike1@example.com", password="1234", groups=[1])
+        user.groups = groups
         user.save_to_db()
+
         return {"message": gettext("USERGROUP_PERMISSION_CREATED")}, 201
