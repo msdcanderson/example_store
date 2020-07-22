@@ -81,6 +81,10 @@ class Store(Resource):
 class StoreList(Resource):
     @classmethod
     def get(cls):
+ 
+        #  if not authorize.read(store):
+        #     raise Unauthorized
+
         return (
             {
                 "stores": store_list_schema.dump(
