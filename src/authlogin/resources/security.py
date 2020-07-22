@@ -43,7 +43,6 @@ class GroupResource(Resource):
     @login_required
     def patch(cls, _id: int):
         group_json = request.get_json()
-        group_json["allowances"] = group_json["allowances"].replace("\\", "")
         group = Group.find_by_id(_id)
 
         # if not authorize.update(group):
