@@ -41,11 +41,11 @@ def create_app():
     jwt.init_app(app)
     babel.init_app(app)
 
-    # from authlogin.resources.user import UserRegister, UserLogin, UserLogout
+    from authz.resources.user import UserRegister, UserLogin, UserLogout
 
-    # api.add_resource(UserRegister, "/register")
-    # api.add_resource(UserLogin, "/login")
-    # api.add_resource(UserLogout, "/logout")
+    api.add_resource(UserRegister, "/register")
+    api.add_resource(UserLogin, "/login")
+    api.add_resource(UserLogout, "/logout")
 
     # from authlogin.resources.security import NewGroup, GroupResource, UserGroup
 

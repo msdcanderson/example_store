@@ -3,7 +3,8 @@ from flask_jwt_extended import JWTManager
 from flask_login import LoginManager
 # from flask_authorize import Authorize
 
-from authlogin.models.user import User
+# from authlogin.models.user import User
+from authz.models.user import User
 
 
 login_manager = LoginManager()
