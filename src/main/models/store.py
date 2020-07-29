@@ -7,11 +7,11 @@ from extensions import authorize
 
 class StoreModel(db.Model, PermissionsMixin):
     __tablename__ = "stores"
-    __permissions__ = dict(
-        owner=['read', 'update', 'delete', 'revoke'],
-        group=['read', 'update'],
-        other=['read']
-        )
+    # __permissions__ = dict(
+    #     owner=['read', 'update', 'delete', 'revoke'],
+    #     group=['read', 'update'],
+    #     other=['read']
+    #     )
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)

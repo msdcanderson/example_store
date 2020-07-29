@@ -17,7 +17,20 @@
 
 
 -- UPDATE roles
--- SET restrictions = '{"stores":["create"]'
+-- SET restrictions = '{"stores":["create", "read", "delete"]'
 -- WHERE 
 --     id = 1;
 
+
+INSERT INTO user_role (user_id, role_id)
+VALUES (2,1);
+
+
+
+
+-- -- Store
+
+-- UPDATE stores
+-- SET other_permissions = NULL
+-- WHERE
+-- id = 1;
