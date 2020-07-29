@@ -1,17 +1,13 @@
 from datetime import datetime
 from typing import List
 from db import db
-from flask_authorize import PermissionsMixin
-from extensions import authorize
+# from flask_authorize import PermissionsMixin
+# from extensions import authorize
 
 
-class StoreModel(db.Model, PermissionsMixin):
+# class StoreModel(db.Model, PermissionsMixin):
+class StoreModel(db.Model):
     __tablename__ = "stores"
-    # __permissions__ = dict(
-    #     owner=['read', 'update', 'delete', 'revoke'],
-    #     group=['read', 'update'],
-    #     other=['read']
-    #     )
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
@@ -25,7 +21,8 @@ class StoreModel(db.Model, PermissionsMixin):
 
     @classmethod
     def find_all(cls) -> List["StoreModel"]:
-        return list(filter(authorize.read, cls.query.all()))
+        # return list(filter(authorize.read, cls.query.all()))
+        return cls.query.all()
 
     def save_to_db(self) -> None:
         db.session.add(self)

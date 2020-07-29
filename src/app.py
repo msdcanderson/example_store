@@ -3,7 +3,7 @@ from flask_restful import Api
 from marshmallow import ValidationError
 from dotenv import load_dotenv
 
-from extensions import babel, jwt, login_manager, authorize 
+from extensions import babel, jwt, login_manager #, authorize 
 
 
 from db import db
@@ -36,23 +36,23 @@ def create_app():
     ma.init_app(app)
 
     login_manager.init_app(app)
-    authorize.init_app(app)
+    # authorize.init_app(app)
 
     jwt.init_app(app)
     babel.init_app(app)
 
-    from authlogin.resources.user import UserRegister, UserLogin, UserLogout
+    # from authlogin.resources.user import UserRegister, UserLogin, UserLogout
 
-    api.add_resource(UserRegister, "/register")
-    api.add_resource(UserLogin, "/login")
-    api.add_resource(UserLogout, "/logout")
+    # api.add_resource(UserRegister, "/register")
+    # api.add_resource(UserLogin, "/login")
+    # api.add_resource(UserLogout, "/logout")
 
-    from authlogin.resources.security import NewGroup, GroupResource, UserGroup
+    # from authlogin.resources.security import NewGroup, GroupResource, UserGroup
 
-    api.add_resource(NewGroup, "/group")
-    api.add_resource(GroupResource, "/group/<int:_id>")
-    api.add_resource(UserGroup, "/usergroup/<int:_id>")
-    # api.add_resource(UserGroup, "/usergroup")
+    # api.add_resource(NewGroup, "/group")
+    # api.add_resource(GroupResource, "/group/<int:_id>")
+    # api.add_resource(UserGroup, "/usergroup/<int:_id>")
+    # # api.add_resource(UserGroup, "/usergroup")
 
 
     from main.resources.store import NewStore, Store, StoreList

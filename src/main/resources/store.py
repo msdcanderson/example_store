@@ -3,7 +3,7 @@ from flask import request
 from flask_babel import gettext
 from flask_login import login_required, current_user
 from werkzeug.exceptions import NotFound, Unauthorized
-from extensions import authorize
+# from extensions import authorize
 
 from main.models.store import StoreModel
 from main.schemas.store import StoreSchema
@@ -17,7 +17,7 @@ store_list_schema = StoreSchema(many=True)
 class NewStore(Resource):
     @classmethod
     @login_required
-    @authorize.create(StoreModel)    
+    # @authorize.create(StoreModel)    
     def post(cls):
         store_json = request.get_json()
         store = store_schema.load(store_json)
@@ -38,8 +38,8 @@ class Store(Resource):
         if not store:
             return {"message": gettext("STORE_NOT_FOUND")}, 404
         
-        if not authorize.read(store):
-            raise Unauthorized
+        # if not authorize.read(store):
+        #     raise Unauthorized
         
         return store_schema.dump(store), 200
 
@@ -49,8 +49,8 @@ class Store(Resource):
         store_json = request.get_json()
         store = StoreModel.find_by_id(_id)
 
-        if not authorize.update(store):
-            raise Unauthorized
+        # if not authorize.update(store):
+        #     raise Unauthorized
 
         if store:
             store.name = store_json["name"]
@@ -70,9 +70,8 @@ class Store(Resource):
         if not store:
             return {"message": gettext("STORE_NOT_FOUND")}, 404
 
-        if not authorize.delete(store):
-            raise Unauthorized
-            # print("car")
+        # if not authorize.delete(store):
+        #     raise Unauthorized
 
         store.delete_from_db()
         return {"message": gettext("STORE_DELETED")}, 200
