@@ -2,8 +2,12 @@ from flask import Flask, jsonify
 from flask_restful import Api
 from marshmallow import ValidationError
 from dotenv import load_dotenv
+import sys
+sys.path.append('../../flask-authz')
+from flask_authz_mine import CasbinEnforcer
+from casbin.persist.adapters import FileAdapter
 
-from extensions import babel, jwt, login_manager #, authorize 
+from extensions import babel, jwt, login_manager#, casbin_enforcer #, authorize 
 
 
 from db import db
@@ -27,11 +31,6 @@ def create_app():
         db.create_all()
         
 
-    @app.route("/")
-    def index():
-        return jsonify({"hello": "world"})
-
-
     db.init_app(app)
     ma.init_app(app)
 
@@ -40,6 +39,22 @@ def create_app():
 
     jwt.init_app(app)
     babel.init_app(app)
+
+    # Set up Casbin model config
+    app.config['CASBIN_MODEL'] = './src/casbinmodel.conf'
+    # Set headers where owner for enforcement policy should be located
+    app.config['CASBIN_OWNER_HEADERS'] = {'Authorization'}
+    # Set up Casbin Adapter
+    adapter = FileAdapter('./src/security_policy.csv')
+    casbin_enforcer = CasbinEnforcer(app, adapter)
+    # casbin_enforcer.init_app(app, adapter)
+
+
+    @app.route("/")
+    @casbin_enforcer.enforcer
+    def index():
+        return jsonify({"hello": "world"})
+
 
     from authz.resources.user import UserRegister, UserLogin, UserLogout
 

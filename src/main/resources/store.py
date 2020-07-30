@@ -3,6 +3,7 @@ from flask import request
 from flask_babel import gettext
 from flask_login import login_required, current_user
 from werkzeug.exceptions import NotFound, Unauthorized
+# from app import casbin_enforcer
 # from extensions import authorize
 
 from main.models.store import StoreModel
@@ -32,7 +33,7 @@ class NewStore(Resource):
 class Store(Resource):
     @classmethod
     @login_required
-    # @authorize.read(StoreModel)
+    # @casbin_enforcer.enforcer
     def get(cls, _id: int):
         store = StoreModel.find_by_id(_id)
         if not store:

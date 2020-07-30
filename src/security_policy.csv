@@ -1,0 +1,7 @@
+p, admin, /*, (GET)|(POST)|(PATCH)|(DELETE)
+p, 1, /*, (GET)|(POST)|(PATCH)|(DELETE)
+p, 2, /store/2, GET
+
+g, store1owner, admin
+g, 1, admin
+g, 2, store2viewer

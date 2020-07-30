@@ -3,6 +3,10 @@ from flask_jwt_extended import JWTManager
 from flask_login import LoginManager
 # from flask_authorize import Authorize
 
+# import sys
+# sys.path.append('../../flask-authz')
+# from flask_authz import CasbinEnforcer
+
 # from authlogin.models.user import User
 from authz.models.user import User
 
@@ -13,6 +17,9 @@ login_manager = LoginManager()
 def load_user(userid):
     return User.query.get(userid)
 
+
+# casbin_enforcer = CasbinEnforcer()
+# casbin_enforcer = CasbinEnforcer(app, adapter)
 
 # authorize = Authorize()
 babel = Babel()
