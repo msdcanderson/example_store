@@ -2,12 +2,14 @@ from flask import Flask, jsonify
 from flask_restful import Api
 from marshmallow import ValidationError
 from dotenv import load_dotenv
-import sys
-sys.path.append('../../flask-authz')
-from flask_authz_mine import CasbinEnforcer
+
+# import sys
+# sys.path.append('../../flask-authz')
+# from flask_authz_mine import CasbinEnforcer
+# from enforcer import UpdatedCasbinEnforcer
 from casbin.persist.adapters import FileAdapter
 
-from extensions import babel, jwt, login_manager#, casbin_enforcer #, authorize 
+from extensions import babel, jwt, login_manager, casbin_enforcer #, authorize 
 
 
 from db import db
@@ -46,8 +48,9 @@ def create_app():
     app.config['CASBIN_OWNER_HEADERS'] = {'Authorization'}
     # Set up Casbin Adapter
     adapter = FileAdapter('./src/security_policy.csv')
-    casbin_enforcer = CasbinEnforcer(app, adapter)
-    # casbin_enforcer.init_app(app, adapter)
+    casbin_enforcer.init_app(app, adapter)
+    # casbin_enforcer = CasbinEnforcer(app, adapter)
+    # casbin_enforcer = UpdatedCasbinEnforcer(adapter)
 
 
     @app.route("/")
